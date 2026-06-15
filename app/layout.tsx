@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import Createnotes from "@/components/Createnotes";
+import {Lexend } from "next/font/google";
+import Header from "@/(components)/Header";
+import Sidebar from "@/(components)/Sidebar";
+import Createnotes from "@/(components)/Createnotes";
+import ContextWrap from "@/(components)/contextWrapper";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
+const lexendFont = Lexend({
+  variable: "--font-lexend",
+  subsets: ["latin"]
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,24 +26,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${lexendFont.variable} font-lexend h-full antialiased`}
     >
-      <body className="h-screen flex w-full overflow-hidden bg-[#1E293B]">
+     
+     <ContextWrap>
 
-      {/* Sidebar */}
-  
-      <Sidebar />
-      <Createnotes />
-      
-      <div className="flex flex-col flex-1 h-full overflow-hidden">
+     <Sidebar ></Sidebar>
+     
+     {children}
 
-      <Header />
-
-    <main className="flex-1 overflow-y-auto p-8 bg-[#1E293B">
-      {children}
-    </main>
-    </div>
-      </body>
+     </ContextWrap>
+    
     
     </html>
   );

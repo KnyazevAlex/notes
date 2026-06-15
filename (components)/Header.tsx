@@ -7,9 +7,12 @@ import { useState } from "react"
 
 
 
+
 const Header = () => {
   const [notifications, sendNotification] = useState(false)
-  return (
+
+
+   return (
     // Change: Flex container to hold the Search (left/center) and User (right)
      <>
   
