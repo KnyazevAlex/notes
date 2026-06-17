@@ -8,7 +8,7 @@ const findAndDeleteNote = async(id : any) => {
 
 try{
 
-await connectToMongo()
+await connectToMongo() 
 
 const noteToDelete = await Model.findByIdAndDelete(id)
 
