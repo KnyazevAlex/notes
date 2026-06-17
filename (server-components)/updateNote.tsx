@@ -2,6 +2,7 @@
 
 import NoteModel from "@/(server-components)/mongooseModel"
 import { error } from "console"
+import connectToMongo from './mongoConnect'
 
 
 const updateNote = async(id: any , fieldName: string, value: string | undefined ) => {
@@ -18,6 +19,8 @@ if (!allowedFields.includes(fieldName)) {
 
 //if body is empty return error body has to 3 chars long at least
 if(value?.length && value.length < 3 || value!.length === 0 ) return {error: 'fields have to be at least 3 characters long!'}
+
+await connectToMongo()
 
 const updatedField = await NoteModel.findByIdAndUpdate(
  id, 
