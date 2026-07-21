@@ -8,7 +8,7 @@ import {useRef, useState, useTransition} from 'react'
 import { useDebounce, useDebouncedCallback } from 'use-debounce'
 
 
-const UpdateNote = ({title, subtitle, body, id} : NotesInterface) => {
+const UpdateNote = ({title, subtitle, body, userId} : NotesInterface) => {
   
 const titleRef = useRef<HTMLInputElement>(null)
 const subtitleRef = useRef<HTMLInputElement>(null)
@@ -35,7 +35,7 @@ const saveChange = (
       startTransition(async () => {
         try {
 
-          const {error} = await updateNote(id, key, currentVal)
+          const {error} = await updateNote(userId, key, currentVal)
 
           if(error)  updErrors(error)
         
