@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation'
 import connectToMongo from "@/(server-components)/mongoConnect";
 
 const saveNote = async(prevState: any, formData : FormData) => {
+    
 
 const {title,subtitle,body} = Object.fromEntries(formData.entries())
 
