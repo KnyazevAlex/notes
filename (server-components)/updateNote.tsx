@@ -9,7 +9,7 @@ import { revalidatePath } from 'next/cache'
 
 const updateNote = async(id: string, fieldName: string, value: string | undefined ) => {
 
-try{
+
 
 if(fieldName !== 'body' && value && value.length > 50)  return { error: 'Character limit for title & subtitle is 50!' }
 
@@ -22,10 +22,10 @@ if (!allowedFields.includes(fieldName)) {
 //if body is empty return error body has to 3 chars long at least
 if(value !== undefined && value.trim().length < 3) return {error: 'fields have to be at least 3 characters long!'}
 
-const conn = await connectToMongo('notes')
-
-const notesModel = getNotesModel(conn)
 const userId = await verifySession()
+const conn = await connectToMongo('notes')
+const notesModel = getNotesModel(conn)
+
 
 const updatedField = await notesModel.findOneAndUpdate(
  {_id: id, userId},
@@ -42,15 +42,6 @@ if (!updatedField) {
 revalidatePath('/home')
 
 return {success: true}
-
-}
-catch(err:any){
-
-console.log(err)
-
-return {success: false, errors: {serverSide: err.message || 'Database error!'}}
-
-}
 
 
 }

@@ -10,10 +10,12 @@ const findAndDeleteNote = async(id : any) => {
 try{
 
 
+
+const sessionID = await verifySession()    
 const conn = await connectToMongo('notes')
 
 const notesModel = getNotesModel(conn)
-const sessionID = await verifySession()
+
 
 const noteToDelete = await notesModel.findOneAndDelete({
     _id: id,

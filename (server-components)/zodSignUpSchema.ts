@@ -14,8 +14,8 @@ const zodSignUpSchema = z.object({
               .string()
               .min(8, {error: 'Password must be at least 8 characters long!'})
               .regex(/[a-zA-Z]/, {error:'Password must contain at least one letter!'})
-              .regex(/[0-9]/, {error:'Password must contain at leadt one number!'})
-              .regex(/[^a-zA-Z0-9]/, {error: 'Passowrd must contain at least 1 special character!'})
+              .regex(/[0-9]/, {error:'Password must contain at least one number!'})
+              .regex(/[^a-zA-Z0-9]/, {error: 'Password must contain at least 1 special character!'})
 })
 
 

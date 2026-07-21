@@ -9,11 +9,12 @@ import getNotesModel from "@/(server-components)/models/NotesModel"
 
 const loadNotes = async() => {
 
+
+const sessionID =  await verifySession()
+
 const conn = await connectToMongo('notes')
 
 const NotesModel = getNotesModel(conn)
-
-const sessionID =  await verifySession()
 
 const rawNotes = await NotesModel.find({
   userId: sessionID

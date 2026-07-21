@@ -34,9 +34,8 @@ if(Object.keys(errors).length > 0){
 
 try{
 
+const session = await verifySession()    
 const conn = await connectToMongo('notes')
-const session = await verifySession()
-
 const notesModel = getNotesModel(conn)
 
 const newNote = new notesModel({
