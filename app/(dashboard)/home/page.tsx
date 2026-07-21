@@ -1,4 +1,6 @@
 'use client'
+import Link from "next/link";
+import Image from "next/image";
 
 import Image from "next/image";
 import {motion, scale} from 'motion/react'
@@ -133,9 +135,12 @@ export default  function Home() {
               <p className="text-xs text-indigo-100 mt-1 mb-4">
                Create your note by clicking the button below
               </p>
-              <div className="w-full text-center py-2 px-4 bg-white/10 hover:bg-white/20 transition rounded-lg text-sm font-medium border border-white/10 cursor-pointer">
+              <Link 
+              className="w-full text-center py-2 px-4 bg-white/10 hover:bg-white/20 transition rounded-lg text-sm font-medium border border-white/10 cursor-pointer"
+              href={'/home/createNote'}
+              >
                 Create
-              </div>
+              </Link>
               
             </div>
 

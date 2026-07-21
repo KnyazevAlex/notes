@@ -4,6 +4,9 @@ import getNotesModel from "@/(server-components)/models/NotesModel"
 import connectToMongo from "./mongoConnect"
 import { revalidatePath } from 'next/cache'
 
+import NoteModel from "@/(server-components)/mongooseModel"
+import { error } from "console"
+import connectToMongo from './mongoConnect'
 
 
 const updateNote = async(id: any , fieldName: string, value: string | undefined ) => {
@@ -26,6 +29,9 @@ const conn = await connectToMongo('notes')
 const notesModel = getNotesModel(conn)
 
 const updatedField = await notesModel.findByIdAndUpdate(
+await connectToMongo()
+
+const updatedField = await NoteModel.findByIdAndUpdate(
  id, 
  {$set: {[fieldName]: value ?? '...'}},
  {new: true}
