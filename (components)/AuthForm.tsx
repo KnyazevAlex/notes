@@ -36,7 +36,7 @@ export default function AuthForm({ mode = "signup" }: Props) {
             className="w-full rounded-xl bg-blue-400 px-4 py-3 text-black placeholder:text-black/60 outline-none focus:ring-2 focus:ring-white/20"
           />
 
-          {/* OAuth icons (kept exactly like yours) */}
+         
           <div className="flex justify-center gap-10 py-2">
             <SiGoogle size={30} className="cursor-pointer hover:scale-110 transition" />
             <SiGithub size={30} className="cursor-pointer hover:scale-110 transition" />
