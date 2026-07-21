@@ -4,8 +4,6 @@ import Header from "@/(components)/Header";
 import Sidebar from "@/(components)/Sidebar";
 import Createnotes from "@/(components)/Createnotes";
 import ContextWrap from "@/(components)/contextWrapper";
-import getUserModel from "@/(server-components)/models/UserAuthModel";
-import connectToMongo from "@/(server-components)/mongoConnect";
 import "./globals.css";
 
 
@@ -25,9 +23,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const conn = await connectToMongo('auth')
-  const authModel = getUserModel(conn)
   
   return (
     <html

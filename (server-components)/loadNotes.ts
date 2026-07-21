@@ -24,6 +24,8 @@ const rawNotes = await NotesModel.find({
   
   { 
     id: note._id.toString(),
+    userId: note.userId.toString(),
+    
     title: note.title,
     subtitle: note.subtitle,
     body: note.body,

@@ -2,7 +2,7 @@
 
 import { motion, scale } from "motion/react"
 import { useState, useActionState } from "react"
-import { SiGoogle, SiGithub } from "@icons-pack/react-simple-icons"
+// import { SiGoogle, SiGithub } from "@icons-pack/react-simple-icons"
 import Link from "next/link"
 import signUp from "@/(server-components)/signUp"
 import { FormState } from "@/(server-components)/zodSignUpSchema"
@@ -138,10 +138,10 @@ const acitveState = isSignup ? signUpState : loginState
         </motion.ul>
          }
          
-          <div className="flex justify-center gap-10 py-2">
+          {/* <div className="flex justify-center gap-10 py-2">
             <SiGoogle size={30} className="cursor-pointer hover:scale-110 transition" />
             <SiGithub size={30} className="cursor-pointer hover:scale-110 transition" />
-          </div>
+          </div> */}
 
           <p className="text-center text-sm text-white/80">
             {isSignup ? (

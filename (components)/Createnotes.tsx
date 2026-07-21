@@ -31,7 +31,7 @@ return(
                     subtitle={note.subtitle.length > 25 ? `${(note.subtitle).slice(0,25)}.....` : note.subtitle}
                     content={note.body}
                     key={note.id}
-                    id={note.userId}
+                    id={note.id}
                  
                     />
                 ))

@@ -13,7 +13,6 @@ import { redirect } from 'next/navigation'
 const verifySession = cache(async() => {
 
     const sessionCookie = (await cookies()).get('session')?.value
-    console.log(`The cookies is : ${sessionCookie}`)
 
     if(!sessionCookie) redirect('/login')
     

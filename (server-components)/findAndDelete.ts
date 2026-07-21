@@ -16,7 +16,9 @@ const notesModel = getNotesModel(conn)
 const sessionID = await verifySession()
 
 const noteToDelete = await notesModel.findOneAndDelete({
+    _id: id,
     userId: sessionID
+
 })
 
 revalidatePath('/home')
