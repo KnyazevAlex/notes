@@ -1,4 +1,4 @@
-import NotesModel from '@/(server-components)/mongooseModel'
+import getNotesModel from "@/(server-components)/models/NotesModel"
 import { redirect } from 'next/navigation'
 import UpdateNote from '@/(components)/updateNoteDebounce'
 import connectToMongo from '@/(server-components)/mongoConnect'
@@ -10,8 +10,9 @@ import { notFound } from 'next/navigation'
 
 const Note  = async ({params} : {params: Promise<{notes: string}>}) => {
 
-await connectToMongo()
+const conn  = await connectToMongo('notes')
 
+const notesModel = getNotesModel(conn)
 
 
 const {notes} = await params
@@ -24,7 +25,7 @@ if(!Types.ObjectId.isValid(notes)){
 
 try{
 
-const {title, body, subtitle, id} = await NotesModel.findById(notes)
+const {title, body, subtitle, id} = await notesModel.findById(notes)
 
 return(
     <UpdateNote

@@ -1,7 +1,9 @@
+import { Schema } from "mongoose"
+
 interface Notes {
     title: string,
     subtitle: string,
     body: string
-    id?:string
+    userId: Schema.Types.ObjectId
 }
 export default Notes

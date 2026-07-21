@@ -1,7 +1,9 @@
 "use server"
 
-import NoteModel from "@/(server-components)/mongooseModel"
-import { error } from "console"
+import getNotesModel from "@/(server-components)/models/NotesModel"
+import connectToMongo from "./mongoConnect"
+import { revalidatePath } from 'next/cache'
+
 
 
 const updateNote = async(id: any , fieldName: string, value: string | undefined ) => {
@@ -19,13 +21,17 @@ if (!allowedFields.includes(fieldName)) {
 //if body is empty return error body has to 3 chars long at least
 if(value?.length && value.length < 3 || value!.length === 0 ) return {error: 'fields have to be at least 3 characters long!'}
 
-const updatedField = await NoteModel.findByIdAndUpdate(
+const conn = await connectToMongo('notes')
+
+const notesModel = getNotesModel(conn)
+
+const updatedField = await notesModel.findByIdAndUpdate(
  id, 
  {$set: {[fieldName]: value ?? '...'}},
  {new: true}
 )
 
-console.log(updatedField)
+revalidatePath('/')
 
 return {success: true}
 

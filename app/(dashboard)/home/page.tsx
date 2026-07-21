@@ -1,8 +1,10 @@
+'use client'
+
 import Image from "next/image";
+import {motion, scale} from 'motion/react'
 
 
-export default function Home() {
-
+export default  function Home() {
 
   return (
     <div className="min-h-screen h-100vh bg-[#0F172A] text-slate-100 p-6 ">
@@ -10,12 +12,18 @@ export default function Home() {
         
         {/* Header Section */}
         <header className="border-b border-slate-800 pb-6">
-          <h1 className="text-3xl font-extrabold text-white tracking-tight max-sm:text-xl">
+          <motion.h1 className="text-3xl font-extrabold text-white tracking-tight max-sm:text-xl"
+          initial={{x:-1000}}
+          animate={{x:0}}
+          >
             Welcome to Your Knowledge Base
-          </h1>
-          <p className="mt-2 text-base text-slate-400">
+          </motion.h1>
+          <motion.p className="mt-2 text-base text-slate-400"
+          initial={{y:-20, opacity:0}}
+          animate={{y:0, opacity:100}}
+          >
             Create, organize, and review your thoughts, blueprints, and tech stack overviews all in one secure place.
-          </p>
+          </motion.p>
         </header>
 
     
@@ -26,7 +34,10 @@ export default function Home() {
           
           {/* Left Column: How To Use (Main Content) */}
           <main className="lg:col-span-2 space-y-6 max-sm:text-xs ">
-            <div className="bg-[#1E293B] border border-slate-700/50 rounded-xl p-6 shadow-md">
+            <motion.div className="bg-[#1E293B] border border-slate-700/50 rounded-xl p-6 shadow-md"
+            initial={{scale:0}}
+            animate={{scale:1.0}}
+            >
               <h2 className="text-xl font-bold text-slate-100 mb-4 flex items-center gap-2">
                 🚀 Getting Started & Usage Guide
               </h2>
@@ -68,10 +79,13 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Formatting Tips / Shortcuts Card */}
-            <div className="bg-[#1E293B] border border-slate-700/50 rounded-xl p-6 shadow-md">
+            <motion.div className="bg-[#1E293B] border border-slate-700/50 rounded-xl p-6 shadow-md"
+            initial={{scale:0}}
+            animate={{scale:1}}
+            >
               <h3 className="text-lg font-bold text-slate-100 mb-3">
                 💡 Document Writing Rules
               </h3>
@@ -83,11 +97,14 @@ export default function Home() {
                 <li><strong className="text-indigo-400">Subtitle Field:</strong> Requires 3-50 characters. Best used to sum up context or technologies used.</li>
                 <li><strong className="text-indigo-400">Body Field:</strong> Designed for details. Currently restricted to 50 characters max for quick logging (expandable via server schema).</li>
               </ul>
-            </div>
+            </motion.div>
           </main>
 
           {/* Right Column: Sidebar / System Logs */}
-          <aside className="space-y-6">
+          <motion.aside className="space-y-6"
+          initial={{scale:0}}
+          animate={{scale:1}}
+          >
             <div className="bg-[#1E293B] border border-slate-700/50 rounded-xl p-6 shadow-md">
               <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">
                 System Capabilities
@@ -133,13 +150,16 @@ export default function Home() {
               
             </div>
 
-          </aside>
+          </motion.aside>
       
           
         </div>
 
       </div>
-      <footer className="mt-60 pt-6 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <motion.footer className="mt-60 pt-6 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-4"
+      initial={{y:-100, opacity:0}}
+      animate={{y:0, opacity:100}}
+      >
           <div>
             <p>© {new Date().getFullYear()} NoteVault Inc. Built with Next.js Server Actions & MongoDB.</p>
           </div>
@@ -150,7 +170,7 @@ export default function Home() {
             <span className="text-slate-700">•</span>
             <a href="#" className="hover:text-indigo-400 transition">API Reference</a>
           </div>
-        </footer>
+        </motion.footer>
     </div>
   );
 }

@@ -1,16 +1,23 @@
 'use server'
 
 import connectToMongo from "@/(server-components)/mongoConnect";
-import Note from "@/(server-components)/mongooseModel"
+import verifySession from "./sessions/verifySession";
+import getNotesModel from "@/(server-components)/models/NotesModel"
 
 
 
 
 const loadNotes = async() => {
 
-await connectToMongo()
+const conn = await connectToMongo('notes')
 
-const rawNotes = await Note.find({}).lean()
+const NotesModel = getNotesModel(conn)
+
+const sessionID =  await verifySession()
+
+const rawNotes = await NotesModel.find({
+  userId: sessionID
+}).lean()
  
 
  const cleanNotes = rawNotes.map((note: any) => (

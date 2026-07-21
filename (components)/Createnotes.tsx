@@ -1,12 +1,10 @@
 import Card from "@/(components)/Card"
 import loadNotes from "@/(server-components)/loadNotes"
-import { revalidatePath } from 'next/cache'
 
 
 
 const Createnotes = async() => {
     
-
 
 const notes = await loadNotes()
 
@@ -33,7 +31,7 @@ return(
                     subtitle={note.subtitle.length > 25 ? `${(note.subtitle).slice(0,25)}.....` : note.subtitle}
                     content={note.body}
                     key={note.id}
-                    id={note.id}
+                    id={note.userId}
                  
                     />
                 ))
