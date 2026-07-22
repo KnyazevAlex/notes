@@ -16,7 +16,7 @@ const [state, formAction, pending ] = useActionState(saveNote, initialState)
 const formRef = useRef<HTMLFormElement>(null)
 
 useEffect(() => {
-  console.log(state)
+
     if(state?.success){
         formRef.current?.reset()
     }

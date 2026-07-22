@@ -2,13 +2,14 @@
 
 import { Search, Bell } from "lucide-react"
 import Image from "next/image"
+import {motion} from 'motion/react'
 import { useState } from "react"
 
 
 
 
 
-const Header = () => {
+const Header = ({username} : any) => {
   const [notifications, sendNotification] = useState(false)
 
 
@@ -22,7 +23,10 @@ const Header = () => {
       
 
       {/* 1. Search Bar Container */}
-      <div className="flex justify-end relative w-screen">
+      <motion.div className="flex justify-end relative w-screen"
+      initial={{y:-100, opacity:0}}
+      animate={{y:0, opacity:100}}
+      >
         <div className="absolute inset-y-0  flex items-center pointer-events-none">
           <Search size={18} className="text-slate-400 relative " />
         </div>
@@ -35,7 +39,7 @@ const Header = () => {
         />
 
  
-      </div>
+      </motion.div>
       
       {/* 2. User Interactivity (Right Side) */}
       <div className="flex items-center gap-6">
@@ -47,20 +51,25 @@ const Header = () => {
           }
         </button>
 
-        <div className="flex items-center gap-3">
+        <motion.div className="flex items-center gap-3"
+        initial={{opacity:0}}
+        animate={{opacity:100}}
+        >
           <div className="hidden md:block text-right">
-            <p className="text-sm font-medium text-slate-100">User</p>
+            <p className="text-sm font-medium text-slate-100">{username}</p>
           </div>
-          <div className="rounded-full overflow-hidden border-2 border-slate-700">
+          <motion.div className="rounded-full overflow-hidden border-2 border-slate-700 w-10 h-10 hover:cursor-pointer"
+            whileHover={{scale:1.2}}
+          >
             <Image
-              src="/defaultuserpfp.webp"
-              width={40}
-              height={40}
+              src="/userpfp.webp"
+              width={200}
+              height={200}
               alt="User profile"
               className="object-cover"
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
     </header>

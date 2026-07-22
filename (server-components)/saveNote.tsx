@@ -1,10 +1,11 @@
 "use server"
 
-import NoteModel from '@/(server-components)/mongooseModel'
-import connectToMongo from './mongoConnect'
+import getNotesModel from "@/(server-components)/models/NotesModel"
 import validateField from './validator'
+import verifySession from "./sessions/verifySession"
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import connectToMongo from "@/(server-components)/mongoConnect";
 
 const saveNote = async(prevState: any, formData : FormData) => {
     
@@ -34,12 +35,15 @@ if(Object.keys(errors).length > 0){
 
 try{
 
-await connectToMongo()
+const session = await verifySession()    
+const conn = await connectToMongo('notes')
+const notesModel = getNotesModel(conn)
 
-const newNote = new NoteModel({
+const newNote = new notesModel({
         title: title,
         subtitle: subtitle,
         body: body,
+        userId: session
 })
 await newNote.save()
 

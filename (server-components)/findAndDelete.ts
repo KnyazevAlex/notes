@@ -1,6 +1,7 @@
 'use server'
 
-import Model from '@/(server-components)/mongooseModel'
+import getNotesModel from "@/(server-components)/models/NotesModel"
+import verifySession from "./sessions/verifySession"
 import connectToMongo from './mongoConnect'
 import { revalidatePath } from 'next/cache'
 
@@ -8,11 +9,21 @@ const findAndDeleteNote = async(id : any) => {
 
 try{
 
-await connectToMongo() 
 
-const noteToDelete = await Model.findByIdAndDelete(id)
 
-revalidatePath('/')
+const sessionID = await verifySession()    
+const conn = await connectToMongo('notes')
+
+const notesModel = getNotesModel(conn)
+
+
+const noteToDelete = await notesModel.findOneAndDelete({
+    _id: id,
+    userId: sessionID
+
+})
+
+revalidatePath('/home')
 
 
 }

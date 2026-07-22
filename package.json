@@ -9,7 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^13.13.0",
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
+    "jose": "^6.2.3",
     "lucide-react": "^1.14.0",
     "mongodb": "^7.2.0",
     "mongoose": "^9.6.2",
@@ -18,7 +22,8 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "swr": "^2.4.1",
-    "use-debounce": "^10.1.1"
+    "use-debounce": "^10.1.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

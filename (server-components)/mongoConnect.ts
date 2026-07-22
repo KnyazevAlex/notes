@@ -1,56 +1,91 @@
-import mongoose from "mongoose";
+import mongoose, { Connection } from "mongoose";
 
-const MONGO_URI = process.env.MONGO_URI as string;
-console.log("MONGO_URI:", MONGO_URI) // Debugging line to check the value of MONGO_URI
+const MONGONOTES_URI = process.env.MONGO_URI as string;
 
+interface mongooseCache {
 
-if (!MONGO_URI) {
-  throw new Error("Please define the MONGO_URI environment variable");
+auth: {
+
+conn: Connection | null,
+promise: Promise<Connection> | null
+
+}
+,
+notes: {
+
+conn: Connection | null,
+promise: Promise<Connection> | null
+
+},
+
+session: {
+
+conn: Connection | null,
+promise: Promise<Connection> | null
+
+}
 }
 
-/**
- * Global is used here to maintain a cached connection
- * across hot reloads in development.
- */
 declare global {
-  // eslint-disable-next-line no-var
-  var mongooseCache: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  };
+  var mongooseCache : mongooseCache | null
 }
 
-let cached = global.mongooseCache;
+const globalCache : mongooseCache = global.mongooseCache ?? {
+  auth:{
+    conn: null,
+    promise: null
+  },
+  notes:{
+    conn: null,
+    promise: null
+  },
+  session:{
+    conn:null,
+    promise: null,
+  }
+}
+global.mongooseCache = globalCache
 
-// 1. Check if it exists on global, if not, initialize it directly on global
-if (!cached) {
-  global.mongooseCache = { conn: null, promise: null };
+
+const connectToMongo = async(type: 'auth' | 'notes' | 'session') => {
+  
+
+const cache = globalCache[type]
+
+if (!cache) {
+    throw new Error(`Mongo cache missing for database: ${type}`)
 }
 
-async function connectToMongo() {
-  console.log("Checking database connection status...");
+if(cache){
 
-  // 2. Always point directly to the global object
-  if (global.mongooseCache.conn) {
-    console.log("Using cached MongoDB connection");
-    return global.mongooseCache.conn;
-  }
+if(cache.conn){
+  return cache.conn
+}
 
-  if (!global.mongooseCache.promise) {
-    try {
-      console.log("No cached connection found. Creating new connection promise...");
-      global.mongooseCache.promise = mongoose.connect(MONGO_URI, {
-        bufferCommands: false,
-      });
-      console.log("Successfully created MongoDB connection promise.");
-    } catch (err) {
-      global.mongooseCache.promise = null; 
-      throw new Error("Failed to connect to MongoDB: " + err);
-    }
-  }
+if(!cache.promise){
 
-  global.mongooseCache.conn = await global.mongooseCache.promise;
-  return global.mongooseCache.conn;
+const URI = MONGONOTES_URI
+
+const connection =  mongoose.createConnection(URI, {bufferCommands: false}).asPromise()
+cache.promise = connection
+}
+
+try{
+
+  cache.conn = await cache.promise
+
+  return cache.conn
+}
+catch(err){
+
+  cache.promise = null
+  cache.conn = null
+
+throw err
+}
+
+}
+
 }
 
 export default connectToMongo;

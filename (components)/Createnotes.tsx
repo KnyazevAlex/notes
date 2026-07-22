@@ -1,17 +1,15 @@
 import Card from "@/(components)/Card"
 import loadNotes from "@/(server-components)/loadNotes"
-import { revalidatePath } from 'next/cache'
 
 
 
 const Createnotes = async() => {
     
 
-
 const notes = await loadNotes()
 
 return(
-        <aside className="flex flex-col w-96 text-center gap-10 py-8 bg-[#334155] max-lg:hidden">
+        <aside className="flex flex-col w-96 text-center gap-10 py-8 bg-[#334155] max-lg:hidden scrollbar-custom overflow-y-scroll">
             <div className="flex justify-center">
             <form action="">
             <a

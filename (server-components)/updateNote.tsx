@@ -1,15 +1,17 @@
 "use server"
 
-import NoteModel from "@/(server-components)/mongooseModel"
-import { error } from "console"
-import connectToMongo from './mongoConnect'
+import getNotesModel from "@/(server-components)/models/NotesModel"
+import verifySession from "./sessions/verifySession"
+import connectToMongo from "./mongoConnect"
+import { revalidatePath } from 'next/cache'
 
 
-const updateNote = async(id: any , fieldName: string, value: string | undefined ) => {
 
-try{
+const updateNote = async(id: string, fieldName: string, value: string | undefined ) => {
 
-if(fieldName !== 'body' && value && value.length > 50)  return { error: 'Charachter limit for title & body is 50!' }
+
+
+if(fieldName !== 'body' && value && value.length > 50)  return { error: 'Character limit for title & subtitle is 50!' }
 
 const allowedFields = ['title', 'subtitle', 'body'] 
 
@@ -18,28 +20,28 @@ if (!allowedFields.includes(fieldName)) {
 }
 
 //if body is empty return error body has to 3 chars long at least
-if(value?.length && value.length < 3 || value!.length === 0 ) return {error: 'fields have to be at least 3 characters long!'}
+if(value !== undefined && value.trim().length < 3) return {error: 'fields have to be at least 3 characters long!'}
 
-await connectToMongo()
+const userId = await verifySession()
+const conn = await connectToMongo('notes')
+const notesModel = getNotesModel(conn)
 
-const updatedField = await NoteModel.findByIdAndUpdate(
- id, 
+
+const updatedField = await notesModel.findOneAndUpdate(
+ {_id: id, userId},
  {$set: {[fieldName]: value ?? '...'}},
  {new: true}
 )
+if (!updatedField) {
+    return {
+        success: false,
+        error: "Note not found or access denied."
+    };
+}
 
-console.log(updatedField)
+revalidatePath('/home')
 
 return {success: true}
-
-}
-catch(err:any){
-
-console.log(err)
-
-return {success: false, errors: {serverSide: err.message || 'Database error!'}}
-
-}
 
 
 }
