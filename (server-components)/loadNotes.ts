@@ -3,11 +3,12 @@
 import connectToMongo from "@/(server-components)/mongoConnect";
 import verifySession from "./sessions/verifySession";
 import getNotesModel from "@/(server-components)/models/NotesModel"
+import {cache} from "react"
 
 
 
 
-const loadNotes = async() => {
+const loadNotes = cache(async() => {
 
 
 const sessionID =  await verifySession()
@@ -21,29 +22,27 @@ const rawNotes = await NotesModel.find({
 }).lean()
  
 
- const cleanNotes = rawNotes.map((note: any) => (
+ const cleanNotes = rawNotes.map((note) => (
   
   { 
     id: note._id.toString(),
     userId: note.userId.toString(),
-    
     title: note.title,
     subtitle: note.subtitle,
     body: note.body,
-    createdAt: note.createdAt?.toString() || null,
-    updatedAt: note.updatedAt?.toString() || null,
+    createdAt: note.createdAt?.toISOString() ?? null,
+    updatedAt: note.updatedAt?.toISOString() ?? null,
   }
 
  
    
  ))
- console.log(cleanNotes)
 
 return cleanNotes
 
   
   }
-
+)
 
 
 export default loadNotes

@@ -13,7 +13,7 @@ export default async function CreateNoteLayout({
 
 
   return (
-    <div className="create-note-container flex h-screen w-screen overflow-hidden">
+    <div className="create-note-container flex h-screen w-screen">
       {/* Add layout elements specific ONLY to creating a note */}
         <Sidebar></Sidebar>
       <main className="flex w-screen h-screen justify-center items-center">

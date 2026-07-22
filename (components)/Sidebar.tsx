@@ -1,6 +1,5 @@
-import Link from "next/link"
 import loadNotes from "@/(server-components)/loadNotes"
-import SideBarTsx from "./SideBarJsx"
+import SideBarTsx from "./SideBarTsx"
 
 
 const Sidebar = async() => {
