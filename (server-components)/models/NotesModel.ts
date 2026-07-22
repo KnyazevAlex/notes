@@ -1,9 +1,9 @@
 import mongoose, {Connection, Model} from "mongoose";
-import NotesInterface from "@/(components)/notesInterface";
 
 
 
-const noteSchema  = new mongoose.Schema<NotesInterface>({
+
+const noteSchema  = new mongoose.Schema({
     title: {type: String, required: true},
 
     subtitle: {type: String, required: true},
